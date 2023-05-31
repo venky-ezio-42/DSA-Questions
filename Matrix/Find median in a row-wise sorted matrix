@@ -1,0 +1,89 @@
+//1. Find Min&Max value of matrix, by finding min element in first column and max element in last column.
+//2. We run BINARY SEACRH on range (Max-Min) and see how many numbers are present less than 'mid' (Using Arrays.binarySearch() function).
+//   If value is not found, it returns the negative value 'index' where the number we are finding should be inserted (So there are [ |index|-1 ] elements before).
+//   If there are duplicates, it returns the first occurence, so we will have to go till last occurence of 'mid'.
+//3. If the count is equal to half of total elements of array, 'mid' is the median.
+//4. If the count is less, Min is changed to mid+1.
+//5. If the count is more, Max is changed to mid.
+
+
+
+public static void Median_Matrix(int A[][])
+    {
+        int row = A.length;
+        int col = A[0].length;
+        
+        int MAX = Integer.MIN_VALUE;
+        int MIN = Integer.MAX_VALUE;
+        
+        //(1.) Finding Min&Max value of the matrix.
+        for(int i=0 ; i<row ; i++)
+        {
+            if(A[i][0] < MIN)
+            {
+                MIN = A[i][0];
+            }
+            
+            if(A[i][col-1] > MAX)
+            {
+                MAX = A[i][col-1];
+            }
+        }
+        
+        //Cieling of odd number division.
+        int median_place = (row*col + 1)/2;
+        
+        int median = 0;
+        
+        //(2.) We run BINARY SEARCH on our min-max range.
+        while(MIN < MAX)
+        {
+            int MID = (MIN+MAX)/2;
+            
+            int numbers_less_than = 0;
+            int position_of_MID = 0;
+            
+            for(int curr_row=0 ; curr_row < row ; curr_row++)
+            {
+                position_of_MID = Arrays.binarySearch(A[curr_row] , MID);
+                
+                //If MID not found in row.
+                if(position_of_MID < 0)
+                {
+                    position_of_MID = Math.abs(position_of_MID) - 1;
+                }
+                
+                //If MID found in row, and also skipping the duplicate occurences by moving to last occurence
+                else
+                {
+                    while(position_of_MID < A[curr_row].length && A[curr_row][position_of_MID] == MID)
+                    {
+                        position_of_MID++;
+                    }
+                }
+                
+                numbers_less_than += position_of_MID;
+            }
+            
+            //(3.) If MID is the median element by satifying the 'count' condition.
+            if(numbers_less_than == median_place)
+            {
+                median = MID;
+                break;
+            }
+            
+            //(4.) If the 'count' is lesser than required, shift the lower value of range.
+            else if(numbers_less_than < median_place)
+            {
+                MIN = MID + 1;
+            }
+            
+            //(5.) If the 'count' is greater than required, shift the higher value of range.
+            else
+            {
+                MAX = MID;
+            }
+        }
+        
+        System.out.print("The median of the matrix is : " + median);
+    }

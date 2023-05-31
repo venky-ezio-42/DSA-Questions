@@ -1,0 +1,53 @@
+//1. Maintain variables for Start&End Row&Col.
+//2. We print StartRow from column indices (StartCol -> EndCol), and increase the count of StartRow.
+//3. We print EndCol from row indices (StartRow -> EndRow), and decrease the count of EndCol.
+//4. We print EndRow from column indices (EndCol -> StartCol), and decrease the count of EndRow. { If StartRow < EndRow }
+//5. We print StartCol from row indices (EndRow -> StartRow), and increase the count of StartCol. {If StartCol < EndCol }
+
+
+public static void Spiral_Traversal (int A[][])
+    {
+        //(1.) Initialising Variables.
+        int EndRow = A.length;
+        int EndCol = A[0].length;
+        
+        int StartRow = 0;
+        int StartCol = 0;
+        
+        while(StartRow < EndRow && StartCol < EndCol)
+        {
+            //(2.) Printing the TopRow.
+            for(int i=StartCol ; i<EndCol ; i++)
+            {
+                System.out.print(A[StartRow][i] + " ");
+            }
+            StartRow++;
+            
+            //(3.) Printing the RightCol.
+            for(int i=StartRow ; i<EndRow ; i++)
+            {
+                System.out.print(A[i][EndRow - 1] + " ");
+            }
+            EndCol--;
+            
+            if(StartRow < EndRow)
+            {
+                //(4.) Printing BottomRow.
+                for(int i=EndCol-1 ; i>=StartCol ; i--)
+                {
+                    System.out.print(A[EndRow - 1][i] + " ");
+                }
+                EndRow--;
+            }
+            
+            if(StartCol < EndCol)
+            {
+                //(5.) Printing LeftCol.
+                for(int i=EndRow-1 ; i>= StartRow ; i--)
+                {
+                    System.out.print(A[i][StartCol] + " ");
+                }
+                StartCol++;
+            }
+        }
+    }

@@ -1,0 +1,34 @@
+//1. Transpose the matrix.
+//2. Reverse each row.
+
+
+public static void Rotate_Clockwise(int A[][])
+    {
+        int row = A.length;
+        int col = A[0].length;
+        
+        //(1.) Transposing MATRIX.
+        for(int curr_row=0 ; curr_row<row ; curr_row++)
+        {
+            for(int curr_col=0 ; curr_col<col ; curr_col++)
+            {
+                int temp = A[curr_row][curr_col];
+                A[curr_row][curr_col] = A[curr_col][curr_row];
+                A[curr_col][curr_row] = temp;
+            }
+        }
+        
+        //(2.) Reversing each row of MATRIX.
+        for(int curr_row=0 ; curr_row<row ; curr_row++)
+        {
+            int row_start = 0;
+            int row_end = col-1;
+            
+            while(row_start < row_end)
+            {
+                int temp = A[curr_row][row_start];
+                A[curr_row][row_start] = A[curr_row][row_end];
+                A[curr_row][row_end] = temp;
+            }
+        }
+    }

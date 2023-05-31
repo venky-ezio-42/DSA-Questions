@@ -1,0 +1,64 @@
+//1. Make a Pre-Processing Matrix that stores the value at index such that,
+//   [ PPM[i][j] stores value of the max value from indices  (i,j) to (n-1, n-1) ] {Starting from end}
+//2. Fill in the last row&col of PPM.
+//3. For each index in matrix A, from 2nd last row&col, compute ( MaxValue = PPM[row+1][col+1] - A[row][col] ) and update if found greater than current value.
+//4. We update the PPM matrix by choosing the max from A[row][col] or the MAX(PPM[row+1][col] , PPM[row][col+1])
+//                                                 [So as to retain max value found from index (i,j) to end]
+
+
+
+public static void Specific_Pair (int A[][])
+    {
+        int row = A.length;
+        int col = A.length;
+        
+        int Max_Difference = Integer.MIN_VALUE;
+        
+        //(1.) Pre-Processing Matrix is initialised.
+        int PPM[][] = new int[row][col];
+        
+        //Last elemnt is set as in this case { (i=n-1) , (j=n-1) }
+        PPM[row-1][col-1] = A[row-1][col-1];
+        
+        //(2.) Pre-Processing last row of PPM.
+        int temp_max = A[row-1][col-1];
+        for(int col_num=col-2 ; col_num>=0 ; col_num--)
+        {
+            if(A[row-1][col_num] > temp_max)
+            {
+                temp_max = A[row-1][col_num];
+            }
+            
+            PPM[row-1][col_num] = temp_max;
+        }
+        
+        //(2.) Pre-Processing last column of PPM.
+        temp_max = A[row-1][col-1];
+        for(int row_num=row-2 ; row_num>=0 ; row_num--)
+        {
+            if(A[row_num][col-1] > temp_max)
+            {
+                temp_max = A[row_num][col-1];
+            }
+            
+            PPM[row_num][col-1] = temp_max;
+        }
+        
+        //(3.) Updating PPM for rest of elements BOTTOM->UP & RIGHT->LEFT.
+        for(int row_num=row-2 ; row_num>=0 ; row_num--)
+        {
+            for(int col_num=col-2 ; col_num>=0 ; col_num--)
+            {
+                // Updating the Max_Difference if difference is greater for element in PPM matrix such that (c > a),(d > b).
+                if(PPM[row_num+1][col_num+1] - A[row_num][col_num] > Max_Difference)
+                {
+                    Max_Difference = PPM[row_num+1][col_num+1] - A[row_num][col_num];
+                }
+                
+                //(4.) PPM is updated by logic that it stores maxValue from current element till end.
+                PPM[row_num][col_num] = Math.max( A[row_num][col_num] , Math.max(PPM[row_num+1][col_num] , PPM[row_num][col_num+1]) );
+            }
+        }
+        
+        System.out.print("Max Difference given the conditions is : " + Max_Difference);
+    }

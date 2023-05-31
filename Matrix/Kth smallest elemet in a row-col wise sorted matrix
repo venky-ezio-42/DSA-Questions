@@ -1,0 +1,59 @@
+//1. Get the Max&Min value of the matrix range (first and last element).
+//2. Apply BINARY SEARCH on the range.
+//3. Count the number of elements present in matrix less than the 'mid' value.
+//4. If count is less than 'k' we move our 'low' value to mid+1.
+//5. If count is more than or equal to 'k', we store 'mid' in answer, and move high to mid-1.
+//   { We dont break out of loop when count is equal to 'k' as it may be possible that 'mid' is not present in matrix }
+//   { We store the value when count is more than 'k' in case there are duplicate values present one of which may be our answer }
+
+
+
+public static void Kth_Smallest(int A[][] , int k)
+    {
+        int row_num = A.length;
+        int col_num = A[0].length;
+        
+        //(1.) Getting max and min value of matrix range.
+        int MIN = A[0][0];
+        int MAX = A[row-1][col-1];
+        
+        int answer = 0;
+        
+        //(2.) Applying BINARY SEARCH algorithm on the range.
+        while(MIN < MAX)
+        {
+            MID = (MIN+MAX)/2;
+            
+            int numbers_less_than = 0;
+            int position_of_MID = 0;
+            
+            //(3.) Counting number of elements less than MID.
+            for(int curr_row=0 ; curr_row < row ; curr_row++)
+            {
+                position_of_MID = Arrays.binarySearch(A[curr_row] , MID);
+                
+                //If MID not found in row.
+                if(position_of_MID < 0)
+                {
+                    position_of_MID = Math.abs(position_of_MID) - 1;
+                }
+                
+                numbers_less_than += position_of_MID;
+            }
+            
+            //(4.) Count is less than 'k', we move lower range of BIARY SEARCH.
+            if(numbers_less_than < k)
+            {
+                MIN = MID + 1;
+            }
+            
+            //(5.) Count is more than 'k', we move upper range of BINARY SEARCH.
+            else
+            {
+                answer = MID;
+                MAX = MID - 1;
+            }
+        }
+        
+        System.out.print("The 'Kth' Smallest element is : " + answer);
+    }
