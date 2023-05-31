@@ -1,0 +1,23 @@
+static int maxProfit(int price[], int n) {
+
+    System.out.print("\nEnter array " + n + " elements of the array : ");
+		for(int i=0 ; i<n ; i++)
+		{
+		    A[i] = sc.nextInt();
+		}
+		
+		int first_cp = Integer.MIN_VALUE;
+		int first_sp = 0;
+		int second_cp = Integer.MIN_VALUE;
+		int second_sp = 0;
+		
+		for(int i=0 ; i<n ; i++)
+		{
+		    first_cp = Math.max(first_cp , -A[i]);
+		    first_sp = Math.max(first_sp , first_cp + A[i]);
+		    second_cp = Math.max(second_cp , first_sp - A[i]);
+		    second_sp = Math.max(second_sp , second_cp + A[i]);
+		}
+		
+		System.out.print("\nMax profit with atmost 2 transactions is : " + second_sp);
+    }

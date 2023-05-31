@@ -1,0 +1,56 @@
+//1.   Initialise 2 pointers (less_than_a) at start,  and (greater_than_b) at end.
+//2.   Iterate over the array.
+//3.1. When we encounter an element greater than 'b', we will swap it with element at greater_than_b, and decrement it.
+//     (Swapped element being lesser than 'a' is a possibility)
+//3.2. When we encounter an elemnt lesser than 'a', we will swap it with element at less_than_a, and increment it current pointer.
+//     (The number we have swapped will not be less than 'a' as it is appearing after 'less_than_a' index)
+//3.3. When we encounter a value between 'a' & 'b', we will not make any change to less_than_a & greater_than_b, just increment current pointer.
+
+
+public static void swap(int x, int y)
+    {
+        int temp = x;
+        x = y;
+        y = temp;
+    }
+
+    public void threeWayPartition(int array[], int a, int b, int n) {
+
+        //(1.) Initialising pointers to iterate over array and maintain partitions.
+		int less_than_a = 0;
+		int greater_than_b = n-1;
+		int current_element = 0;
+		
+		//(2.) Iterating over array, till we dont hit the greater_than_b pointer value (OR) reach 2nd partition.
+		while(current_element < greater_than_b)
+		{
+		    
+		    //(3.1.) If element is greater than 'b', swap it decrement partition pointer only.
+		    if(A[current_element] > b)
+		    {
+		        swap(A[current_element] , A[greater_than_b]);
+		        greater_than_b--;
+		    }
+		    
+		    //(3.2.) If element is less than 'a', swap it and increment both pointers.
+		    else if(A[current_element] < a)
+		    {
+		        swap(A[current_element] , A[less_than_a]);
+		        current_element++;
+		        less_than_a++;
+		    }
+		    
+		    
+		    //(3.3.) If element is between 'a' & 'b', increment current pointer.
+		    else
+		    {
+		        current_element++;
+		    }
+		}
+		
+		System.out.print("\nThe new partitioned array is : ");
+		for(int i=0 ; i<n ; i++)
+		{
+		    System.out.print(A[i] + " ");
+		}
+    }

@@ -1,0 +1,35 @@
+public static void find3Numbers(int A[], int n, int X) { 
+
+    Arrays.sort(A);
+		
+		for(int base=0 ; base<n-2 ; base++)
+		{
+		    int left_index = base+1;
+		    int right_index = n-1;
+		    
+		    while(left_index < right_index)
+		    {
+		        if(A[base] + A[left_index] + A[right_index] == X)
+		        {
+		            System.out.println("\nThe triplet is " + A[base] + " " + A[left_index] + " " + A[right_index]);
+		            count++;
+		            break;
+		        }
+		        
+		        else if(A[base] + A[left_index] + A[right_index] < X)
+		        {
+		            left_index++;
+		        }
+		        
+		        else
+		        {
+		            right_index--;
+		        }
+		    }
+		}
+		
+		if(count == 0)
+		{
+		    System.out.println("\nThere are no triplets satisfying the condition.");
+		}
+    }

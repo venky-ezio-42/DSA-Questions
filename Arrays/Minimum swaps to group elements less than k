@@ -1,0 +1,62 @@
+//1.   Count elements (good) less k in array.
+//2.   In the first window count number of elements greater than k (bad).
+//3.1. Slide a window of size of size=good elements (as that is the maximum number of elements required to group together)
+//3.2. While sliding window, decrease 'bad' by 1 if start of window is a 'bad' value.
+//3.3. While sliding window, increase 'bad' by 1 if end of window is a 'bad' value.
+//4.   Update and store minimum value of 'bad' as the answer, as that many swaps will be needed to group 'good' elements.
+//     [answer is initially number of 'bad' elements in first window]
+
+public static void minSwap (int A[], int n, int k) {
+
+    int good = 0;
+		int bad = 0;
+		
+		//(1.) Counting number of 'good' values.
+		for(int i=0 ; i<n ; i++)
+		{
+		    if(A[i] <= k)
+		    {
+		        good++;
+		    }
+		}
+		
+		//(2.) Counting number of bad elements in first window.
+		for(int i=0 ; i<good ; i++)
+		{
+		    if(A[i] > k)
+		    {
+		        bad++;
+		    }
+		}
+		
+		//Answer is initially set to 'bad' numbers in first window.
+		int ans = bad;
+		
+		//(3.1.) Initialising window size to 'good'.
+		int window_start = 0;
+		int window_end = good;
+		
+		while(window_end < n)
+		{
+		    
+		    //(3.2.) Decreasing value of 'bad' by 1 if start of window was a 'bad' value.
+		    if(A[window_start] > k)
+		    {
+		        bad--;
+		    }
+		    
+		    //(3.3.) Increasing value of 'bad' by 1 if end of window is a 'bad' value.
+		    if(A[window_end] > k)
+		    {
+		        bad++;
+		    }
+		    
+		    //(4.) Updating minimum of 'bad' as answer.
+		    ans = Math.min(ans, bad);
+		    
+		    window_start++;
+		    window_end++;
+		}
+		
+		System.out.print("\nMinimum swaps required to group elements less than k : " + ans);
+}

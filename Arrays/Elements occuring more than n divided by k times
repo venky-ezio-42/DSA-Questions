@@ -1,0 +1,78 @@
+public static void morethanNdK(int a[], int n, int k) {
+
+    if(k < 2)
+		{
+		    System.out.print("\nThere are no such elements that occur more than (n/k) times.");
+		    System.exit(1);
+		}
+		
+		elementCount temp[] = new elementCount[k-1];     //There cannot be more than (k-1) elements satisfying the condition.
+		for(int i=0 ; i<k-1 ; i++)
+		{
+		    temp[i] = new elementCount();
+		    temp[i].count=0;
+		}
+		
+		for(int i=0 ; i<n ; i++)
+		{
+		    int checker;                                 //For checking if element in i/p array present in temp array.
+		    
+		    for(checker=0 ; checker<k-1 ; checker++)
+		    {
+		        if(temp[checker].element == A[i])
+		        {
+		            temp[checker].count++;
+		            break;
+		        }
+		    }
+		    
+		    if(checker == k-1)                            //The temp array either empty or filled with element that hasnt shown up yet.
+		    {
+		        int modifier;       
+		        
+		        for(modifier=0 ; modifier<k-1 ; modifier++)
+		        {
+		            if(temp[modifier].count == 0)          //To add an element if count is zero
+		            {
+		                temp[modifier].element = A[i];
+		                temp[modifier].count = 1;
+		                break;
+		            }
+		        }
+		        
+		        if(modifier == k-1)
+		        {
+		            for(modifier=0 ; modifier<k-1 ; modifier++)
+		            {
+		                temp[modifier].count--;           //Reduce the freq in the temp array by 1 when new number is encountered,
+		            }                                     // if an temp array element becomes zero, (freq is not strong enough)
+		        }                                         // then there is chance of adding a new a number in temp array.
+		    }
+		}
+		
+		int flag=0;
+		System.out.print("\nThe elements that appear more than (n/k)times are : ");
+		
+		for(int i=0 ; i<k-1 ; i++)
+		{
+		    int freq = 0;
+		    for(int checker=0 ; checker<n ; checker++)
+		    {
+		        if(A[checker] == temp[i].element)          //Checking how many times elements in the 'temp' array occur in array 'A' 
+		        {
+		            freq++;
+		        }
+		    }
+		    
+		    if(freq > n/k)
+		    {
+		        flag++;
+		        System.out.print(temp[i].element + " ");
+		    }
+		}
+		
+		if(flag==0)
+		{
+		    System.out.print("NONE");
+		}
+    }

@@ -1,0 +1,60 @@
+// ****    L I N K E D   L I S T   A P P R O A C H    ****
+//1. Create a node class wiht previous pointer, we will store the final number in reverse order. (RIGHT TO LEFT)
+
+//   MULTIPLY FUNCTION : 
+//1. We traverse the list till we reach the end of list.
+//2. For each node we multiply the current number for factorial calculation.
+//3. We maitain a variable 'data' which stores result of multiplication for current value, including the 'carry'.
+//4. The digit to be added to list will be "MODULUS" of 'data' with 10, and carry will be the quotient of 'data'.
+//5. Modulus of 10 is added to list and carry is carried ofward.
+//6. when we reach end of list and we still have carry left, we do the previous steps creating each node till carry!=0.
+
+
+class node 
+{
+    int data;
+    node prev;
+    
+    node(int data)
+    {
+        this.data = data;
+        this.prev = null;
+    }
+}
+
+public static void printlist(node tail)
+    {
+        if(tail==null)
+        {
+            return;
+        }
+        
+        printlist(tail.prev);
+        
+        System.out.print(tail.data);
+    }
+
+
+public static void multiply(node tail , int n)
+    {
+        node temp = tail;
+        node prevNode = tail;
+        
+        int carry = 0;
+        
+        while(temp!=null)
+        {
+            int data = temp.data*n + carry;
+            temp.data = data%10;
+            carry = data/10;
+            prevNode = temp;
+            temp = temp.prev;
+        }
+        
+        while(carry!=0)
+        {
+            prevNode.prev = new node(carry%10);
+            carry = carry/10;
+            prevNode = prevNode.prev;
+        }
+    }

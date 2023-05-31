@@ -1,0 +1,61 @@
+//1. We break the array into smaller subarrays, till we reach individual elements by the partition algo of MergeSort.
+//2. While merging, in ascending order. We check if the left part is greater than the right part.
+//   If true, we will sort the elements in ascending order and for each element we sort, we will increment the 'InversionCount' variable by 1.
+//   { So if we are at the i'th element in left part when condition is true, all elements after it till 'mid' will be greater. So we add 'mid-i' to counter }
+//3. Similarly while merging if i'th element is lesser than the one on right side, it cannot be greater than any of the other elements on the right side.
+//   So we increase the the value for 'i' to move to next element and continue.
+//4. We check for each pair in left and right subarrays and add value of 'InversionCount' accordingly.
+
+public static int MergeArraysCount(int A[] , int sorted[] , int left , int mid , int right)
+    {
+        int InversionCount = 0;
+        int left_array_pointer = left;
+        int right_array_pointer = mid;
+        int sorted_array_pointer = left;
+        
+        while((left_array_pointer <= mid-1) && (right_array_pointer <= right))
+        {
+            //(2. & 3.) Checking if element in LeftSubarray greater than that of RightSubarray or not.
+            
+            // If not greater, add it in temp array.
+            if(A[left_array_pointer] <= A[right_array_pointer])
+            {
+                sorted[sorted_array_pointer] = A[left_array_pointer];
+                sorted_array_pointer++;
+                left_array_pointer++;
+            }
+            
+            // If greater sort and add in temp array while maintaining count of inversions/swaps.
+            else
+            {
+                sorted[sorted_array_pointer] = A[right_array_pointer];
+                sorted_array_pointer++;
+                right_array_pointer++;
+                InversionCount += mid - left_array_pointer;
+            }
+        }
+        
+        // Fill in left out elements from LeftSubarray.
+        while(left_array_pointer < mid-1)
+        {
+            sorted[sorted_array_pointer] = A[left_array_pointer];
+            sorted_array_pointer++;
+            left_array_pointer++;
+        }
+        
+        // Fill out left out elements from RightSubarray.
+        while(right_array_pointer <= right)
+        {
+            sorted[sorted_array_pointer] = A[right_array_pointer];
+            sorted_array_pointer++;
+            right_array_pointer++;
+        }
+        
+        // Update sorted array in the InputArray.
+        for(int updater=left ; updater<=right ; updater++)
+        {
+            A[updater] = sorted[updater];
+        }
+        
+        return InversionCount;
+    }

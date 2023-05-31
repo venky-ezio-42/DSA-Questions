@@ -1,0 +1,22 @@
+//1. Sort the array (choose consecutive elements to minimise difference).
+//2. Use sliding window technique to determine minum difference and update it.
+//3. Keep window between indices [i, i+m-1] (window size should be 'm').
+
+public long findMinDiff (ArrayList<Integer> a, int n, int m){
+
+    //(1.) Sorting array.
+		Arrays.sort(A);
+		
+		int min_diff = Integer.MAX_VALUE;
+		
+		//(2.) Use a sliding window to determine difference.
+		for(int i=0 ; i+m-1<n ; i++)
+		{
+		    int diff = A[i+m-1] - A[i];
+		    
+		    //(3.) Update minimum difference encountered till now.
+		    min_diff = Math.min(min_diff, diff);
+		}
+		
+		System.out.print("\nThe minimum difference is : " + min_diff);
+}

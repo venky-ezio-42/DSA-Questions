@@ -1,0 +1,35 @@
+//1. Sort the array.
+//2. Add 'k' to first and subtract 'k' from last element of sorted array.
+//3. We then check for each other element in the array, by increasing elements to the left by 'k', and decreasing elements to the right by 'k'.
+//4. Update answer for each case in step (3.).
+
+public static void Minimise_Max_Height(int A[], int k)
+    {
+        int n=A.length;
+        
+        Arrays.sort(A);
+        
+        int ans = A[n - 1] - A[0];
+  
+        int tempmin = A[0] + k;
+        int tempmax = A[n-1] - k;
+        
+        int min;
+        int max;
+        
+        for(int i=0 ; i<n-1 ; i++)
+        {
+            // Tower height cannot be negative.
+            if(A[i] - k < 0)
+            {
+                continue;
+            }
+            
+            min = Math.min(tempmin , A[i+1] - k);
+            max = Math.max(tempmax , A[i] + k);
+            
+            ans = Math.min(ans, max-min);
+        }
+        
+        System.out.print("Minimum difference after changing heights using 'k' is : " + ans);
+    }

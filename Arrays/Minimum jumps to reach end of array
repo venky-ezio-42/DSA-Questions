@@ -1,0 +1,49 @@
+int minJumps(int arr[], int n) {
+
+        int minJumps[n];    // minimum jumps needed to reach ith index
+        
+        int jumps_left=arr[0]-1,hops=1; // jumps_left from previous hop , hops = number of hops
+        
+        int max_jump = arr[0], index=0; // picking the jump & index with maximum value
+        
+        minJumps[0]=0;
+    
+        for(int i=1 ; i<n ; i++)
+        {
+            
+            minJumps[i]=hops;
+            
+            if(max_jump-i+index<arr[i]) // calculating max_jump
+            { 
+                max_jump = arr[i];
+                index = i;
+            }
+
+            else
+            {
+                max_jump = arr[index]-i+index;
+            }
+            
+            
+            if(jumps_left<0)  // unable to reach end
+            {
+                return -1;
+            }
+            
+            
+            if(jumps_left>0) // decrement if jumps left
+            {  
+                jumps_left--;
+            }
+
+            else
+            {
+                jumps_left = max_jump-1;    // assign jumps if jumps become 0
+                if(jumps_left>0) hops++;
+            }
+            
+            
+        }
+        
+        return minJumps[n-1];  
+    }

@@ -1,0 +1,38 @@
+public static void smallestSubWithSum(int a[], int n, int x) {
+
+        int current_sum = 0;
+		int length_of_subarray = n+1;
+		
+		int start=0;
+		int end=0;
+		
+		while(end<n)
+		{
+		    while(current_sum<=x && end<n)
+		    {
+		        current_sum = current_sum + A[end];
+		        end++;
+		    }
+		    
+		    while(current_sum>x && start<n)
+		    {
+		        if(end-start < length_of_subarray)
+		        {
+		            length_of_subarray = end-start;
+		        }
+		        
+		        current_sum = current_sum - A[start];
+		        start++;
+		    }
+		}
+		
+		if(length_of_subarray == n+1)
+		{
+		    System.out.print("\nNot possible to find such an array.");
+		}
+		
+		else
+		{
+		    System.out.print("\nSubarray length is : " + length_of_subarray);
+		}
+}

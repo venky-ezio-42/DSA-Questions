@@ -1,0 +1,42 @@
+//1. Iterate over array using 2 pointers, one from end and one from start.
+//2. Check for equality of both indices, if equal update both pointers.
+//3. If start pointer element is lesser, so to increase it we will have to merge it with the next element in sequence, update start.
+//4. If end pointer is lesser in value, so to increase it we will have to merge it with the next element in sequence, update end.
+//   * INCREMENT NUMBER OF MERGES EACH TIME STEP 3 or 4 ENCOUNTERED *
+//   * REPEAT STEPS 2-3 TILL 'start' & 'end' CROSS EACH OTHER *
+
+public static int palinArray(int[] a, int n) {
+
+    //(1.) Initialise variables and pointers.
+		int start=0;
+		int end=n-1;
+		int merges = 0;
+		
+		while(start<=end)
+		{
+		    //(2.) For equality we just update pointers.
+		    if(A[start] == A[end])
+		    {
+		        start++;
+		        end--;
+		    }
+		    
+		    //(3.) Value at start is lesser than that of end, so elements are merged.
+		    else if(A[start] < A[end])
+		    {
+		        start++;
+		        A[start] = A[start] + A[start-1];
+		        merges++;
+		    }
+		    
+		    //(4.) Value at end is lesser that that of start, so elements are merged.
+		    else
+		    {
+		        end--;
+		        A[end] = A[end] + A[end+1];
+		        merges++;
+		    }
+		}
+		
+		System.out.print("\nMinimum number of merges to make array a palindromic array is : " + merges);
+}

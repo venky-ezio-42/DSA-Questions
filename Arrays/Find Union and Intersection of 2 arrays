@@ -1,0 +1,124 @@
+//     ** FINDING UNION **
+
+//1.   Make a function that checks for duplicate in the sorted array, and to get teill next distinct element.
+//2.   Iterate over both arrays.
+//2.1. If element in first array is smaller, print it's value and move the pointer of first array till next distince element (using function).
+//2.2. If element in second array is smaller, print it's value and move the pointer of second array till next distince element (using function).
+//2.3. If element in both arrays is equal, print any one of them and move pointer of both arrays till next distince element (using function).
+//3.   We then print the remaining distinct elements (using function) of what is left in the bigger sized array.
+
+//(1.) Function to move to next distinct element.
+    public static void next_distinct_element (int arr[] , int index)
+    {
+        while(arr[index-1] == arr[index])
+        {
+            index++;
+        }
+        
+        return;
+    }
+
+     public static void Print_Union (int A1[], int A2[])
+    {
+        int A1_size = A1.size;
+        int A2_size = A2.size;
+        
+        int A1_iterator = 0;
+        int A2_iterator = 0;
+        
+        //(2.) Iterating both arrays till any one array reaches the end.
+        while(A1_iterator < A2_size && A2_iterator < A2_size)
+        {
+            //(2.1.) If element of first array is small print it and move to next distinct element.
+            if(A1[A1_iterator] <A2[A2_iterator])
+            {
+                System.out.print(A1[A1_iterator] + " ");
+                A1_iterator++;
+                next_distinct_element(A1, A1_iterator);
+            }
+            
+            //(2.2) If element of second array is small print it and move to next distinct element.
+            else if(A2[A2_iterator] < A1[A1_iterator])
+            {
+                System.out.print(A2[A2_iterator] + " ");
+                A2_iterator++;
+                next_distinct_element(A2, A2_iterator);
+            }
+            
+            //(2.3) If both elements are equal print it and move to distinct element in both arrays.
+            else
+            {
+                System.out.print(A1[A1_iterator] + " ");
+                A1_iterator++;
+                A2_iterator++;
+                next_distinct_element(A1, A1_iterator);
+                next_distinct_element(A2, A2_iterator);
+            }
+            
+        }
+
+        //(3.) Printing remaining distint elements in Array 1.
+        while(A1_iterator < A1_size)
+        {
+            System.out.print(A1[A1_iterator] + " ");
+            A1_iterator++;
+            next_distinct_element(A1, A1_iterator);
+        }
+        
+        //(3.) Printing remaining distinct elements in Array 2.
+        while(A2_iterator < A2_size)
+        {
+            System.out.print(A2[A2_iterator] + " ");
+            A2_iterator++;
+            next_distinct_element(A2, A2_iterator);
+        }
+        
+        return;
+    }
+
+//     ** FINDING INTERSECTION **
+
+//1.   Make a function that checks for duplicate in the sorted array, and to get teill next distinct element.
+//2.   Iterate over both arrays.
+//2.1. If element in first array is smaller, move the pointer of first array till next distince element (using function).
+//2.2. If element in second array is smaller, move the pointer of second array till next distince element (using function).
+//2.3. If element in both arrays is equal, print any one of them and move pointer of both arrays till next distince element (using function).
+
+    public static void Print_Intersection (int A1[] , int A2[])
+    {
+        int A1_size = A1.size;
+        int A2_size = A2.size;
+        
+        int A1_iterator = 0;
+        int A2_iterator = 0;
+        
+        //(2.) Iterating both arrays till any one array reaches the end.
+        while(A1_iterator < A2_size && A2_iterator < A2_size)
+        {
+            //(2.1) If element of first array is small, move to next distinct element. 
+            if(A1[A1_iterator] < A2[A2_iterator])
+            {
+                A1_iterator++;
+                next_distinct_element(A1, A1_iterator);
+            }
+            
+            //(2.2.) If element of second array is small, move to next distinct element.
+            else if(A2[A2_iterator] < A1[A1_iterator])
+            {
+                A2_iterator++;
+                next_distinct_element(A2, A2_iterator);
+            }
+            
+            //(2.3.) If both elements are equal, print it and move to next distinct element in both arrays.
+            else
+            {
+                System.out.print(A1[A1_iterator] + " ");
+                A1_iterator++;
+                A2_iterator++;
+                next_distinct_element(A1, A1_iterator);
+                next_distinct_element(A2, A2_iterator);
+            }
+        }
+        
+        return;
+    }

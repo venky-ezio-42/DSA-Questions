@@ -1,0 +1,24 @@
+long maxProduct(int[] A, int n) {
+
+        int minValue_of_product = A[0];
+		int maxValue_of_product = A[0];
+		
+		long ans = A[0];
+		
+		for(int i=1 ; i<n ; i++)
+		{
+		    if(A[i] < 0)
+		    {
+		        int temp = maxValue_of_product;
+		        maxValue_of_product = minValue_of_product;
+		        minValue_of_product = temp;
+		    }
+		 
+		    maxValue_of_product = Math.max(A[i] , maxValue_of_product*A[i]);
+		    minValue_of_product = Math.min(A[i] , minValue_of_product*A[i]);
+		    
+		    ans = Math.max(ans , maxValue_of_product);
+		}
+
+        return ans;
+}

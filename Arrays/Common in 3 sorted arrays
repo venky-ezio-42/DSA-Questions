@@ -1,0 +1,68 @@
+        
+    public static void countDuplicates(int[] A1 , int[] A2 , int[] A3) {
+
+        int duplicate_checker1 = Integer.MIN_VALUE;
+		int duplicate_checker2 = Integer.MIN_VALUE;
+		int duplicate_checker3 = Integer.MIN_VALUE;
+		
+		int i1=0;
+		int i2=0;
+		int i3=0;
+		int count = 0;
+		
+		System.out.print("\nComman elements are : ");
+		
+		while(i1<n1 && i2<n2 && i3<n3)
+		{
+		    while(i1<n1 && A1[i1] == duplicate_checker1)
+		    {
+		        i1++;
+		    }
+		    
+		    while(i2<n2 && A2[i2] == duplicate_checker2)
+		    {
+		        i2++;
+		    }
+		    
+		    while(i3<n3 && A3[i3] == duplicate_checker3)
+		    {
+		        i3++;
+		    }
+		    
+		    
+		    if(i1<n1 && i2<n2 && i3<n3)
+		    {
+		        if(A1[i1] == A2[i2] && A2[i2] == A3[i3])
+		        {
+		            System.out.print(A1[i1] + " ");
+		            duplicate_checker1 = A1[i1];
+		            duplicate_checker2 = A2[i2];
+		            duplicate_checker3 = A3[i3];
+		            
+		            i1++;
+		            i2++;
+		            i3++;
+		            
+		            count++;
+		        }
+		        
+		        else if(A1[i1] < A2[i2])
+		        {
+		            duplicate_checker1 = A1[i1];
+		            i1++;
+		        }
+		        
+		        else if(A2[i2] < A3[i3])
+		        {
+		            duplicate_checker2 = A2[i2];
+		            i2++;
+		        }
+		        
+		        else
+		        {
+		            duplicate_checker3 = A3[i3];
+		            i3++;
+		        }
+		    }
+		}
+    }

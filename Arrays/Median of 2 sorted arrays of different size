@@ -1,0 +1,94 @@
+//1.   Find total number of elements in both arrays combined, and calculate half of it.
+//2.   We select the left half of the smaller array(here forcefully made Array1), and remaining elements from Array2.
+//2.1. We now have 4 partitions, LeftPart_of_1, RightPart_of_1, LeftPart_of_2, RightPart_of_2.
+//3.   We check if the partition is done correctly.
+//3.1. We check if {end of(LeftPart_of_1) <= start of(RightPart_of_2)} && {end of(LeftPart_of_2) <= start of(RightPart_of_1}.
+//     [ If true the partition is done correctly ]
+//3.2. If not true, we move the leftPointer/RightPointer of Array1 to the next/previous element of median(depending on situation), and repeat the process.
+//4.   When the partition is done correctly, The median will be : (max(LeftPart_of_1, LeftPart_of_2) + min(RightPart_of_1, RightPart_of_2))/2. 
+//     [ If size of merged array is even ]
+
+
+public static int Median_of_2_Arrays (int arr1[], int arr2[])
+    {
+        int arr1_size = arr1.length;
+        int arr2_size = arr2.length;
+        
+        int LeftPointer_arr1 = 0;
+        int RightPointer_arr1 = arr1_size;
+        
+        //(1.) Calculate half of total elements in both arrays combined.
+        int Median_of_merged_array = (arr1_size + arr2_size + 1)/2;
+        
+        while(LeftPointer_arr1 <= RightPointer_arr1)
+        {
+            int mid = (LeftPointer_arr1 + RightPointer_arr1)/2;
+            
+            int Left_part_arr1_size = mid;
+            int Left_part_arr2_size = Median_of_merged_array - mid;
+            
+            //(2.1.) Storing the edge values of 4 partitions.
+            // Setting these values for OVERFLOW or UNDERFLOW conditions.
+            int EndOf_LeftPArt_arr1 = Integer.MIN_VALUE;
+            int StartOf_RightPArt_arr1 = Integer.MAX_VALUE;
+            int EndOf_LeftPArt_arr2 = Integer.MIN_VALUE;
+            int StartOf_RightPArt_arr2 = Integer.MAX_VALUE;
+            
+            //Left_part_arr1_size is not UNDERFLOWING
+            if(Left_part_arr1_size > 0)
+            {
+                EndOf_LeftPArt_arr1 = arr1[Left_part_arr1_size - 1];
+            }
+            
+            //Left_part_arr2_size is not UNDERFLOWING
+            if(Left_part_arr2_size > 0)
+            {
+                EndOf_LeftPArt_arr2 = arr2[Left_part_arr2_size - 1];
+            }
+            
+            //Left_part_arr1_size is not OVERFLOWING
+            if(Left_part_arr1_size < arr1_size)
+            {
+                StartOf_RightPArt_arr1 = arr1[Left_part_arr1_size];
+            }
+            
+            //Left_part_arr2_size is not OVERFLOWING
+            if(Left_part_arr2_size < arr2_size)
+            {
+                StartOf_RightPArt_arr2 = arr2[Left_part_arr2_size];
+            }
+            
+            //(3.) Checking if partition done correctly.
+            if( (EndOf_LeftPArt_arr1 <= StartOf_RightPArt_arr2) && (EndOf_LeftPArt_arr2 <= StartOf_RightPArt_arr1))
+            {
+                //(3.1.) If partition is done correctly.
+                
+                //(4.) When merged array is even sizzed.
+                if((arr1_size + arr2_size) % 2 == 0)
+                {
+                    return  ( Math.max(EndOf_LeftPArt_arr1, EndOf_LeftPArt_arr2) + Math.min (StartOf_RightPArt_arr1, StartOf_RightPArt_arr2 )) / 2;
+                }
+                
+                //(4.) When merged array is odd sized.
+                else
+                {
+                    return Math.max(EndOf_LeftPArt_arr1, EndOf_LeftPArt_arr2);
+                }
+            }
+            
+            //(3.2.) If partition is not done correctly.
+            
+            //Condition for moving RightPointer to {mid-1}.
+            else if(EndOf_LeftPArt_arr1 > StartOf_RightPArt_arr2)
+            {
+                RightPointer_arr1 = mid - 1;
+            }
+            
+            //Condition for moving LeftPointer to {mid+1}.
+            else
+            {
+                LeftPointer_arr1 = mid + 1;
+            }
+        }
+        
+    }

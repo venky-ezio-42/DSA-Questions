@@ -1,0 +1,61 @@
+//1. Take 2 pointers one at start and other at end, and 2 variables to store max height of wall from left and right side.
+//2. Traverse array while(leftIndex <= rightIndex) and update maxLeft or maxRight if required.
+//3, If max_left/right need not be updated, it means the walls can trap water between them, add water and move left/right index.
+
+static long trappingWater(int A[], int n) { 
+
+    //Initialisng variables with index and heights.
+		int left_index = 0;
+		int right_index = n-1;
+		
+		int left_max = 0;
+		int right_max = 0;
+		
+		int water_stored = 0;
+		
+		while(left_index <= right_index)
+		{
+		    
+		    //We can store max water till min(A[left_index], A[right_index])
+		    //or water will overflow from shorter side.
+		    if(A[left_index] < A[right_index])
+		    {
+		        //Updating max_left when it is less than current wall height.
+		        if(A[left_index] > left_max)
+		        {
+		            max_left = A[left_index];
+		        }
+		        
+		        //If current height is less than max_left, it can store water.
+		        else
+		        {
+		            water += max_left - A[left_index];
+		        }
+		        
+		        //Updating pointer to move forward to unprocessed heights.
+		        left_index++;
+		    }
+		    
+		    //We can store max water till min(A[left_index], A[right_index])
+		    //or water will overflow from shorter side.
+		    else
+		    {
+		        //Updating max_right when it is less than current wall height.
+		        if(A[right_index] > right_max)
+		        {
+		            right_max = A[right_index];
+		        }
+		        
+		         //If current height is less than max_right, it can store water.
+		        else
+		        {
+		            water += right_max - A[right_index];
+		        }
+		        
+		        //Updating pointer to move backward to unprocessed heights.
+		        right_index--;
+		    }
+		}
+		
+		System.out.print("\nRainwater that can be stored in the structure is : " + water);
+}

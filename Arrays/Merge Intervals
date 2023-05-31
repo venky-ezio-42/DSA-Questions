@@ -1,0 +1,45 @@
+// Linearly iterate over the array if the data structure is empty insert the interval in the data structure. 
+// If the last element in the data structure overlaps with the current interval we merge the intervals by updating the last element in the data structure, 
+// and if the current interval does not overlap with the last element in the data structure simply insert it into the data structure.
+
+public int[][] overlappedInterval(int[][] Intervals)
+    {
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
+        
+        if(A.length == 0)
+        {
+            System.out.print("EMPTY INTERVALS.");
+            System.exit(1);
+        }
+        
+        Arrays.sort(A, (a,b) -> a[0] - b[0]);
+        
+        int interval_start = A[0][0];
+        int interval_end = A[0][1];
+        
+        for(int i=0 ; i<A.length ; i++)
+        {
+            if(A[i][0] <= interval_end)
+            {
+                interval_end = Math.max(interval_end , A[i][1]);
+            }
+            
+            else
+            {
+                ArrayList<Integer> temp = new ArrayList<Integer>();
+                temp.add(interval_start);
+                temp.add(interval_end);
+                
+                ans.add(temp);
+                
+                interval_start = A[i][0];
+                interval_end = A[i][1];
+            }
+        }
+        
+        ArrayList<Integer> temp = new ArrayList<Integer>();
+        temp.add(interval_start);
+        temp.add(interval_end);
+        
+        ans.add(temp);
+    }

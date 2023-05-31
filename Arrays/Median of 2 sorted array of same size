@@ -1,0 +1,53 @@
+//1.   Sort both arrays.
+//2.   Calculate median of both arrays median1 & median2.
+//2.1. If median1 is equal to median2, we have found the median of both arrays. (When merged the median elements will be grouped and we get same median).
+//2.2. If (median1 > median2), the median will be present in subarrays A1[0, n/2] & A2[n/2, n-1] (when merged, the median elements will be in this range).
+//2.3. If (median1 < median2), the median will be present in subarrays A1[n/2, n-1] & A2[0, n/2] (when merged, the median elements will be in this range).
+//     ( We perform step 2.x. recursively till both subarray sizes dont become two. )
+//3.   We then find median by taking the average of MAX(of first elements) & MIN(of last elements) element in both arrays. {BASE CASE}
+
+public static int Median_calculate(int A[] , int start , int end)
+    {
+        int length = end - start + 1;
+        
+        if(length%2 == 0)
+        {
+            return (A[start + length/2] + A[start + length/2 -1])/2;
+        }
+        
+        else
+        {
+            return A[start + length/2];
+        }
+    }
+    
+    public static int Median_Of_Arrays(int arr1[], int Start1, int End1, int arr2[], int Start2, int End2)
+    {
+        //(3.) {BASE CASE}
+        if(End1 - Start1 == 1)
+        {
+            return (Math.max(arr1[Start1], arr2[Start2]) + Math.min(arr1[End1] , arr2[End2])) / 2;
+        }
+        
+        //(2.) Calculate median of both arrays.
+        int median_1 = Median_calculate(arr1, Start1, End1);
+        int median_2 = Median_calculate(arr2, Start2, End2);
+        
+        //(2.1) If both medians are equal this si our answer.
+        if(median_1 == median_2)
+        {
+            return median_1;
+        }
+        
+        //(2.2) If {median_1 > median_2} condition.
+        if(median_1 > median_2)
+        {
+            return Median_Of_Arrays(arr1, Start1, (Start1 + End1 + 1)/2, arr2, (Start2 + End2 + 1)/2, End2);
+        }
+        
+        //(2.3.) if {median_1 < median_2} condition.
+        else
+        {
+            return Median_Of_Arrays(arr1, (Start1 + End1 + 1)/2 , End1, arr2, Start2, (Start2 + End2 + 1)/2);
+        }
+    }

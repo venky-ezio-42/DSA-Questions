@@ -1,0 +1,41 @@
+    public static void sort012(int a[], int n) {
+        
+        int low = 0;
+        int mid = 0;
+        int high = n-1;
+        
+        // iterating until the current number pointer(mid) reaches the end
+        while(mid<=high) 
+        {
+            
+            // if pointer shows 0, swap it to 0 boundary (low)
+            // and move pointer snd boundary to right
+            // if first number itself is zero, it will stay there
+            // and for later iterations, visually the numbers will swap
+            if(a[mid]==0) 
+            {
+                int temp = a[mid];
+                a[mid] = a[low];
+                a[low] = temp;
+                low++;
+                mid++;
+            }
+
+            // if pointer shows 1, move pointer to right
+            // low remains same
+            else if(a[mid]==1) 
+            {
+                mid++;
+            }
+            
+            // if pointer shows 2, swap it to the last
+            // and pull down the boundary by decrementing(high--)
+            else if(a[mid]==2) 
+            {
+                int temp = a[mid];
+                a[mid] = a[high];
+                a[high] = temp;
+                high--;
+            }
+        }
+    }

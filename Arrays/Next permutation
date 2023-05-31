@@ -1,0 +1,50 @@
+static List<Integer> nextPermutation(int N, int arr[]) {
+
+    List<Integer> list = new ArrayList<Integer>();
+    
+    //find breaking index either check from starting or ending
+    int brkidx=-1;
+    for(int i=1;i<N;i++)
+    {
+        if(arr[i]>arr[i-1])
+        brkidx=i-1;
+    }
+
+    //find minimum value after breaking point if not any breaking point find means all element are in decreasing order
+    int min=Integer.MAX_VALUE,minidx=-1;
+
+    if(brkidx!=-1)
+    {
+        for(int i=brkidx+1;i<N;i++)
+        {
+            if(arr[i]<min && arr[i]>arr[brkidx])
+            {
+                min=arr[i];
+                minidx = i;
+            }
+              
+        }
+         
+    }
+
+    //swap breaking point with minimum value after breaking point
+    if(minidx!=-1)
+    {
+        
+        int temp = arr[brkidx];
+        arr[brkidx] = arr[minidx];
+        arr[minidx] = temp;     
+    }
+
+    //sort element  from brkidx+1 to n
+    Arrays.sort(arr,brkidx+1 , N);
+        
+    //add into list and return
+    for(int i=0 ; i<N ; i++)
+    {
+        list.add(arr[i]);
+    }
+     
+    return list;
+     
+}

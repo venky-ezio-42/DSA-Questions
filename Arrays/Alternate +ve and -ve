@@ -1,0 +1,60 @@
+//1.   To check if -ve numbers are present at even index OR +ve number present at odd index.
+//2.   If such index(WrongIndex) is found, we find the next index for which the sign is opposite of A[WrongIndex].
+//3.   We then rightRotate the array between these indexes and move the last element to start of the rotated array...
+//     ...to fix the sequence and also maintain the order of appearance.
+//4.1. If the gap between start(WrongIndex) & end(index) is more than 2, that means we increment index by 2, because...
+//     ...all numbers between them are of the same sign, so the next element will be in correct place and the element after it will not.
+//4.2  If the gap is less that 2, we have basically swapped the elements that are adjacent, so we re-initialis WrongIndex to '-1'.
+
+//Function to rightRotate the array between start & end indices
+    public static void rightRotate(int[] A, int start , int end)                
+    {
+        int temp = A[end];
+        
+        for(int i=end ; i>start ; i--)
+        {
+            A[i] = A[i-1];
+        }
+        
+        A[start] = temp;
+    }
+
+    public void alternatePositiveNegative (int[] A) {
+
+        //Initialise WrongIndex with '-1' as 0th index can also be wrong place.		
+		int WrongIndex = -1;  
+		
+		for(int index=0 ; index<n ; index++)
+		{
+		    //(1.) Checking if there is any element in a WrongIndex.
+		    if(WrongIndex == -1)  
+		    {
+		        //(2.) If so updating value of WrongIndex.
+		        if((A[index] >= 0 && index%2 == 0) || (A[index] < 0 && index%2 != 0))
+		        {
+		            WrongIndex = index; 
+		        }
+		    }
+		    
+		    else  
+		    {   
+		        //(3.)If we have an element in WrongIndex, we rightRotate till index satisfying our condition.
+		        if((A[WrongIndex] >= 0 && A[index] < 0) || (A[WrongIndex] < 0 && A[index] >=0))
+		        {
+		            rightRotate(A, WrongIndex, index);  
+		        }                                                         
+		        
+		        //(4.1)Incrementing by 2 as more that 2 same sign elements found before rorating array.
+		        if(index - WrongIndex >= 2)  
+		        {
+		            WrongIndex = WrongIndex + 2;
+		        }
+		        
+		        //(4.2)Reinitialise WrongIndex to '-1' as we have basically swapped adjacent values
+		        else
+		        {
+		            WrongIndex = -1;  
+		        }
+		    }
+        }
+    }

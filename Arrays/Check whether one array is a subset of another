@@ -1,0 +1,59 @@
+public String isSubset( int mainArray[], int subArray[]) {
+
+    int n = mainArray.length;
+    int m = subArray.length;
+
+    //Storing answer in boolean variable to check for (T/F) condition of subArray being present in mainArray.
+		Boolean ans = true;
+		
+		//(1.) Sorting the arrays so as to make comparisons easier in 1 traversal.
+		Arrays.sort(mainArray);
+		Arrays.sort(subArray);
+		
+		//Initialising pointers for respective arrays.
+		int mainArray_iterator = 0;
+		int subArray_iterator = 0;
+		
+		
+		//(2.) Traversing both arrays from start to end.
+		while(mainArray_iterator < n && subArray_iterator < m)
+		{
+		    
+		    //(3.1.) Moving forward in mainArray, so as to reach a next bigger element, searching for equality.
+		    if(mainArray[mainArray_iterator] < subArray[subArray_iterator])
+		    {
+		        mainArray_iterator++;
+		    }
+		    
+		    //(3.2.) Moving forward in both arrays to check equality of next elements.
+		    else if(mainArray[mainArray_iterator] == subArray[subArray_iterator])
+		    {
+		        mainArray_iterator++;
+		        subArray_iterator++;
+		    }
+		    
+		    //(3.3.) As subArray value is lesser than current mainArray, there is no chance of finding a smaller element later.
+		    //       * Answer is updated *
+		    else if(mainArray[mainArray_iterator] > subArray[subArray_iterator])
+		    {
+		        ans = false;
+		    }
+		}
+		
+		//(4.) Could not reach end of subArray, so there are still elements left, which could not be matched.
+		//     * Answer is updated *
+		if(subArray_iterator < m)
+		{
+		    ans = false;
+		}
+		
+		if(ans)
+		{
+		    System.out.print("\nsubArray is present in mainArray.");
+		}
+		
+		else
+		{
+		    System.out.print("\nsubArray is NOT present in mainArray");
+		}
+    }
