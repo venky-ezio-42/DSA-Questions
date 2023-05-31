@@ -1,0 +1,44 @@
+/*
+Given a grid(A) of size n * m, lets assume you are starting at (1,1) and your goal is to reach (n, m). 
+At any instance, if you are on (x, y), you can either go to (x, y + 1) or (x + 1, y).
+
+Now consider if some obstacles are added to the grids. 
+Return the total number unique paths from (1, 1) to (n, m).
+*/
+
+public int uniquePathsWithObstacles(ArrayList<ArrayList<Integer>> A) {
+
+        int n = A.size();
+        int m = A.get(0).size();
+
+        int[][] dp = new int[n][m];
+        for (int i = 0; i < n; i++) 
+        {
+            Arrays.fill(dp[i], -1);
+        }
+
+        return solve(n - 1, m - 1, A, dp);
+    }
+
+    public int solve(int n , int m , ArrayList<ArrayList<Integer>> A , int[][] dp) {
+
+        if(n==0 && m==0 && A.get(n).get(m)!=1)
+        {
+            return 1;
+        }
+
+        // Out of grid movement or there is a blocked space
+        if(n<0 || m<0 || A.get(n).get(m)==1)
+        {
+            return 0;
+        }
+
+        if(dp[n][m] != -1)
+        {
+            return dp[n][m];
+        }
+
+        dp[n][m] =  solve(n-1 , m , A , dp) + solve(n , m-1 , A , dp);
+
+        return dp[n][m];
+    }

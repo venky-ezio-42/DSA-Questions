@@ -1,0 +1,21 @@
+public long count(int coins[], int N, int sum) {
+        
+        //storing the number of solutions for value i.
+        long dp[] = new long[sum+1];
+        
+        // Base case (If given value is 0)
+        dp[0] = 1;
+        
+
+        // Pick all coins one by one and update dp[] values after the index greater than or equal to the
+        // value of the picked coin
+        for(int i=0 ; i<N ; i++)
+        {
+            for(int j=coins[i] ; j<sum+1 ; j++)
+            {
+                dp[j] += dp[j - coins[i]];
+            }
+        }
+        
+        return (long)dp[sum];
+    }
